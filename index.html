@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The e4 Benchmark</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Fira Code', monospace;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #2c3e50;
+            cursor: pointer;
+        }
+        h1 {
+            font-family: 'Fira Code', monospace;
+        }
+        select, button {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 2px solid black;
+            background-color: white;
+            color: black;
+            cursor: pointer;
+        }
+        select {
+            width: 200px;
+        }
+        button {
+            width: auto;
+            min-width: 120px;
+        }
+        #content {
+            display: flex;
+            flex-wrap: wrap;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        #gifContainer {
+            flex: 1;
+            min-width: 300px;
+            margin-right: 20px;
+        }
+        #gifContainer img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        #gameData {
+            flex: 2;
+            min-width: 300px;
+        }
+        #viewAllData {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #3498db;
+            text-decoration: none;
+        }
+        #viewAllData:hover {
+            text-decoration: underline;
+        }
+        #footer {
+            font-size: 0.8em;
+            text-align: center;
+            margin-top: 20px;
+            color: #7f8c8d;
+        }
+        #logo {
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1 onclick="location.reload()">The e4 Benchmark</h1>
+    <div style="text-align: center;">
+        <select id="modelSelect">
+            <option value="">Select a model</option>
+            <option value="chatgpt4o">ChatGPT-4o mini</option>
+            <option value="claude35">Claude 3.5 Sonnet</option>
+            <option value="gemini15">Gemini 1.5 Flash</option>
+            <option value="llama31">llama-3.1-70b-versatile</option>
+            <option value="llama32">llama-3.2-90b-text-preview</option>
+            <option value="llama370b">llama3-70b-8192</option>
+            <option value="mistralnemo">Mistral Nemo</option>
+        </select>
+        <button id="viewGameBtn" style="display:none;">View Game</button>
+    </div>
+    <div id="content">
+        <div id="gifContainer"></div>
+        <div id="gameData"></div>
+    </div>
+    <img id="logo" src="https://cdn.glitch.global/3ddc4d85-fd3e-4009-bfd2-a0d856c24e5a/e4%20benchmark%20(1).png?v=1729073604000" alt="e4 benchmark">
+    <a id="viewAllData" href="#" target="_blank">View All Data</a>
+    <div id="footer">Data is for recent models only, more models coming soon. All data has been harvested using one game per LLM, second round will be releasing soon.</div>
+
+    <script>
+        const gameData = {
+            chatgpt4o: {
+                model: "ChatGPT-4o mini",
+                stockfish: "SF 16 , 7 MB , Depth 28 , NNUE , cloud [final]",
+                datePlayed: "10/16/2024",
+                stockfishColor: "White",
+                modelColor: "Black",
+                result: "Stockfish - Rate of illegal moves exceeded",
+                illegalMoves: 3,
+                accuracyStockfish: "N/A",
+                accuracyModel: "N/A",
+                gameLink: "https://www.chess.com/emboard?id=12291679",
+                gifLink: "https://images.chesscomfiles.com/uploads/game-gifs/90px/green/neo/0/cc/0/0/bUMwS2d2NVFmSFdPSHkhVGVnOTBmZVpSa3M4IXB4UTV5azVaaXlZSWxCSUJzQktCdkJaS2JzOThuREtVY3VSSkNL.gif",
+                moves: "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 d6 7. c3 O-O 8. h3 Nb8 9. Bc2 Nbd7 10. a4 c5 11. d4 cxd4 12. cxd4 exd4 13. Nxd4 Ne5 14. Nc3 Re8 15. f4 Ng6 16. Be3 d5 17. e5",
+                viewAllDataLink: "https://github.com/idaeyus/e4benchmark/blob/main/data.txt"
+            },
+            claude35: {
+                model: "Claude 3.5 Sonnet",
+                stockfish: "SF 16 , 7 MB , Depth 30 , NNUE , cloud [final]",
+                datePlayed: "10/16/2024",
+                stockfishColor: "Black",
+                modelColor: "White",
+                result: "Stockfish - Rate of illegal moves exceeded",
+                illegalMoves: 3,
+                accuracyStockfish: "N/A",
+                accuracyModel: "N/A",
+                gameLink: "https://www.chess.com/emboard?id=12291655",
+                gifLink: "https://images.chesscomfiles.com/uploads/game-gifs/90px/green/neo/0/cc/0/0/bUMwS2d2NVFmSCFUZWdUQ2ZlQ1J2S1FLZUs5MEtlUkhrQUhCbHQ4IWJzWlJjdUJMZGwwRnNDTHVudUZlbGU2U2VuUkpBSUpDdEJYUGFkUElCSTdk.gif",
+                moves: "1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Nxe4 5. Re1 Nd6 6. Nxe5 Nxe5 7. Rxe5+ Be7 8. Re1 Nxb5 9. c4 Nd4 10. d3 O-O 11. Nc3 d6 12. Be3 Nf5 13. Qd2 Bh4 14. Ne4 Nxe3 15. fxe3 Bxe6 17. Qf2 d5 18. c5 dxe4 19. d4 b6 20. Rd1 bxc5 21. dxc5 Qxd1+",
+                viewAllDataLink: "https://github.com/idaeyus/e4benchmark/blob/main/data.txt"
+            },
+            gemini15: {
+                model: "Gemini 1.5 Flash",
+                stockfish: "SF 16 , 7 MB , Depth 32 , NNUE , cloud [final]",
+                datePlayed: "10/16/2024",
+                stockfishColor: "Black",
+                modelColor: "White",
+                result: "Stockfish - Rate of illegal moves exceeded",
+                illegalMoves: 4,
+                accuracyStockfish: "N/A",
+                accuracyModel: "N/A",
+                gameLink: "https://www.chess.com/emboard?id=12291697",
+                gifLink: "https://images.chesscomfiles.com/uploads/game-gifs/90px/green/neo/0/cc/0/0/bUMwS2d2NVFmSFdPSHkhVGVnOTBmZVpSa3M4IXB4UTV5azVaaXlZSWxCSUJzQktCdkJaS2JzOThuREtVY3VSSkNL.gif",
+                moves: "1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Nxe4 5. d3 Nd6",
+                viewAllDataLink: "https://github.com/idaeyus/e4benchmark/blob/main/data.txt"
+            },
+            llama31: {
+                model: "llama-3.1-70b-versatile",
+                stockfish: "SF 16 , 7 MB , Depth 28 , NNUE , cloud [final]",
+                datePlayed: "10/15/2024",
+                stockfishColor: "Black",
+                modelColor: "White",
+                result: "Stockfish - [#]",
+                illegalMoves: 2,
+                accuracyStockfish: 97.2,
+                accuracyModel: 70.2,
+                gameLink: "https://www.chess.com/emboard?id=12288967",
+                gifLink: "https://images.chesscomfiles.com/uploads/game-gifs/90px/green/neo/0/cc/0/0/bUMwS2d2NVFmQTlJdktRS2x0S0F0QVpSZG03Rm93RnhtdUl1bnV4U0prcXFzRUoyZz09.gif",
+                moves: "1. e4 e5 2. Nf3 Nf6 3. d4 exd4 4. c4 Bb4+ 5. Nd2 d6 6. a3 Qe7",
+                viewAllDataLink: "https://github.com/idaeyus/e4benchmark/blob/main/data.txt"
+            },
+            llama32: {
+                model: "llama-3.2-90b-text-preview",
+                stockfish: "SF 16 , 7 MB , Depth 36 , NNUE , cloud [final]",
+                datePlayed: "10/15/2024",
+                stockfishColor: "Black",
+                modelColor: "White",
+                result: "Stockfish - Rate of illegal moves exceeded",
+                illegalMoves: 4,
+                accuracyStockfish: "N/A",
+                accuracyModel: "N/A",
+                gameLink: "https://www.chess.com/emboard?id=12288975",
+                gifLink: "https://images.chesscomfiles.com/uploads/game-gifs/90px/green/neo/0/cc/0/0/bUMwS2d2NVFmcElSZlFDQXZmRlJ2cWFTYURZckFZZVZMdVkrSlBzd29sd29YWVFXYW44QmNmSXVoNDZpbVRq.gif",
+                moves: "1. e4 e5 2. Nf3 d6 3. d4 exd4 4. Nxd4 Be7 5. Bd3 c5 6. Nc3 Bf6 7. Bb5 Bxc6",
+                viewAllDataLink: "https://github.com/idaeyus/e4benchmark/blob/main/data.txt"
+            },
+            llama370b: {
+                model: "llama3-70b-8192",
+                stockfish: "SF 16 , 7 MB , Depth 40 , NNUE , cloud [final]",
+                datePlayed: "10/15/2024",
+                stockfishColor: "White",
+                modelColor: "Black",
+                result: "Stockfish - [##]",
+                illegalMoves: 1,
+                accuracyStockfish: 90.2,
+                accuracyModel: 80.3,
+                gameLink: "https://www.chess.com/emboard?id=12288989",
+                gifLink: "https://images.chesscomfiles.com/uploads/game-gifs/90px/green/neo/0/cc/0/0/bUMwS2d2NVFmcUhFbEZSbGVOTzZseWxFS0VCdUNHRGF0TnVvTXpqcXhjZWlCeVkwTlRVd0RFM0dLNDZtVWlU.gif",
+                moves: "1. e4 e5 2. Nc3 d5 3. d3 Bb4 4. Bd2 dxe4 5. Be2 exf3 6. g3 Nf6",
+                viewAllDataLink: "https://github.com/idaeyus/e4benchmark/blob/main/data.txt"
+            }
+        };
+
+       function renderGameDetails(modelKey) {
+            const data = gameData[modelKey];
+            if (data) {
+                document.getElementById('gifContainer').innerHTML = `<img src="${data.gifLink}" alt="Game GIF">`;
+                document.getElementById('gameData').innerHTML = `
+                    <h2>${data.model}</h2>
+                    <p><strong>Date Played:</strong> ${data.datePlayed}</p>
+                    <p><strong>Stockfish:</strong> ${data.stockfish}</p>
+                    <p><strong>Stockfish Color:</strong> ${data.stockfishColor}</p>
+                    <p><strong>Model Color:</strong> ${data.modelColor}</p>
+                    <p><strong>Result:</strong> ${data.result}</p>
+                    <p><strong>Illegal Moves:</strong> ${data.illegalMoves}</p>
+                    <p><strong>Accuracy Stockfish:</strong> ${data.accuracyStockfish}</p>
+                    <p><strong>Accuracy Model:</strong> ${data.accuracyModel}</p>
+                    <p><strong>Moves:</strong><p><strong>Moves:</strong> ${data.moves}</p>
+                `;
+                document.getElementById('viewGameBtn').style.display = 'inline-block';
+                document.getElementById('viewGameBtn').onclick = () => window.open(data.gameLink, '_blank', 'noopener noreferrer');
+                document.getElementById('viewAllData').href = data.viewAllDataLink;
+            }
+        }
+
+        document.getElementById('modelSelect').addEventListener('change', function () {
+            const modelKey = this.value;
+            if (modelKey) {
+                renderGameDetails(modelKey);
+            } else {
+                document.getElementById('gifContainer').innerHTML = '';
+                document.getElementById('gameData').innerHTML = '';
+                document.getElementById('viewGameBtn').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
